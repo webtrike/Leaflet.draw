@@ -86,8 +86,12 @@ L.Edit.PolyVerticesEdit = L.Handler.extend({
 			className: 'leaflet-div-icon leaflet-editing-icon'
 		}),
 		touchIcon: new L.DivIcon({
+			iconSize: new L.Point(8, 8),
+			className: 'leaflet-div-icon leaflet-editing-icon'
+      /*
 			iconSize: new L.Point(20, 20),
 			className: 'leaflet-div-icon leaflet-editing-icon leaflet-touch-icon'
+      */
 		}),
 		drawError: {
 			color: '#b00b00',
@@ -245,6 +249,8 @@ L.Edit.PolyVerticesEdit = L.Handler.extend({
 			.on('dragend', this._fireEdit, this)
 			.on('touchmove', this._onTouchMove, this)
 			.on('touchend', this._fireEdit, this)
+      .on('mouseover', this._fireMouseOver, this)
+      .on('mouseout', this._fireMouseOut, this)
 			.on('MSPointerMove', this._onTouchMove, this)
 			.on('MSPointerUp', this._fireEdit, this);
 
@@ -252,6 +258,16 @@ L.Edit.PolyVerticesEdit = L.Handler.extend({
 
 		return marker;
 	},
+
+  _fireMouseOver: function(e) {
+    var marker = e.target;
+    this._poly._map.fire(L.Draw.Event.MARKERMOUSEOVER, {marker: marker, layer: this._markerGroup});
+  },
+
+  _fireMouseOut: function(e) {
+    var marker = e.target;
+    this._poly._map.fire(L.Draw.Event.MARKERMOUSEOUT, {marker: marker, layer: this._markerGroup});
+  },
 
 	_onMarkerDragStart: function () {
 		this._poly.fire('editstart');
@@ -280,8 +296,10 @@ L.Edit.PolyVerticesEdit = L.Handler.extend({
 			.off('touchmove', this._onMarkerDrag, this)
 			.off('touchend', this._fireEdit, this)
 			.off('click', this._onMarkerClick, this)
+      .off('mouseover', this._fireMouseOver, this)
+      .off('mouseout', this._fireMouseOut, this)
 			.off('MSPointerMove', this._onTouchMove, this)
-			.off('MSPointerUp', this._fireEdit, this);
+			.off('MSPointerUp', this._fireEdit, this)
 	},
 
 	_fireEdit: function () {
@@ -380,7 +398,6 @@ L.Edit.PolyVerticesEdit = L.Handler.extend({
 
 	_onContextMenu: function (e) {
 		var marker = e.target;
-		var poly = this._poly;
 		this._poly._map.fire(L.Draw.Event.MARKERCONTEXT, {marker: marker, layers: this._markerGroup, poly: this._poly});
 		L.DomEvent.stopPropagation;
 	},

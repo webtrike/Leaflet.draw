@@ -175,3 +175,17 @@ L.Draw.Event.TOOLBARCLOSED = 'draw:toolbarclosed';
  * Triggered when a marker is right clicked.
  */
 L.Draw.Event.MARKERCONTEXT = 'draw:markercontext';
+
+/**
+ * @event draw:markermouseover: String
+ *
+ * Triggered when mouse is over marker.
+ */
+L.Draw.Event.MARKERMOUSEOVER = 'draw:markermouseover';
+
+/**
+ * @event draw:markermouseout: String
+ *
+ * Triggered when mouse leaves marker.
+ */
+L.Draw.Event.MARKERMOUSEOUT = 'draw:markermouseout';
