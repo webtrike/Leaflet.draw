@@ -97,8 +97,6 @@ L.Edit.PolyVerticesEdit = L.Handler.extend({
 			color: '#b00b00',
 			timeout: 1000
 		}
-
-
 	},
 
 	// @method intialize(): void
@@ -238,6 +236,7 @@ L.Edit.PolyVerticesEdit = L.Handler.extend({
 		var marker = new L.Marker.Touch(latlng, {
 			draggable: true,
 			icon: this.options.icon,
+      properties: {}
 		});
 
 		marker._origLatLng = latlng;
